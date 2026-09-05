@@ -1,45 +1,75 @@
 # Tiny Meeting Cost
 
-> **TinyManager Module · Foundation**  
-> Make the real cost of a meeting visible before, during and after it happens.
+> **TinyManager Module · Alpha**  
+> Calculate the time and financial cost of a meeting with only three inputs.
 
 [🇮🇷 فارسی](README.md) · [🇬🇧 English](README.en.md) · [TinyManager Core](https://github.com/webtanan-sketch/tinymanager)
 
 ![TinyManager Module](https://img.shields.io/badge/TinyManager-Module-2563EB)
-![Status](https://img.shields.io/badge/Status-Foundation-64748B)
+![Status](https://img.shields.io/badge/Status-Alpha-F59E0B)
+![CI](https://github.com/webtanan-sketch/tiny-meeting-cost/actions/workflows/ci.yml/badge.svg)
 ![FA RTL](https://img.shields.io/badge/FA-RTL-0F766E)
 ![EN LTR](https://img.shields.io/badge/EN-LTR-0F766E)
 ![License](https://img.shields.io/badge/License-MIT-111827)
 
-## Purpose
+## Why this tool?
 
-**Tiny Meeting Cost** answers one focused management question:
+A 60- or 90-minute meeting is not only calendar time. It consumes the combined time of everyone in the room. Tiny Meeting Cost makes that cost visible without setup-heavy forms.
 
-> What is this meeting actually costing the organization?
+## What the current Alpha does
 
-A manager enters participants, duration and approximate hourly cost, and the tool turns that into an immediate, understandable cost signal.
+It asks for only:
 
-## First-release scope
+1. **Participant count**
+2. **Duration in minutes**
+3. **Average hourly cost per person**
 
-- participant count
-- meeting duration
-- average or per-person hourly cost
-- total meeting cost
-- optional live cost timer
-- person-hours consumed
-- useful cost comparisons
-- Persian / English
-- RTL / LTR
-- local-first persistence
-- shareable summary export
+It instantly returns:
 
-## What this module is not
+- estimated total meeting cost
+- total person-hours consumed
+- approximate cost per minute
+- Toman, IRR, USD and EUR currency choices
 
-It is not a calendar, video-conferencing platform or full meeting-notes suite. It is a **micro tool** dedicated to making meeting cost visible.
+## Example
 
-## TinyManager integration
+```text
+8 people
+90 minutes
+$45 / hour / person
 
-Integrated mode consumes shared Core services for locale, direction, theme, storage, optional project context and export.
+→ 12 person-hours
+→ $540 estimated cost
+```
+
+## Tiny AI
+
+Inside TinyManager, the same calculation can be requested without opening the module:
+
+```text
+What's the cost of a 90 minute meeting with 8 people at $45/hour?
+```
+
+Tiny AI routes the request to `tiny-meeting-cost.calculate`. Because calculation is read-only, the answer is returned immediately. If one required value is missing, TinyManager asks only for that value.
+
+## Two execution modes
+
+### Standalone
+
+This repository runs as its own React app. Locale, theme and the latest values persist locally in the browser.
+
+### TinyManager Module
+
+The same domain calculator and `MeetingCostWorkspace` are consumed as a package by TinyManager, so AI, standalone UI and integrated UI do not duplicate business logic.
+
+```text
+Tiny Meeting Cost
+├── Domain calculator
+├── Standalone App
+└── TinyManager Module API
+    ├── UI Workspace
+    └── Tiny AI calculate action
+```
 
 ## Module identity
 
@@ -48,35 +78,44 @@ ID:       tiny-meeting-cost
 Icon:     Clock3 (Lucide)
 Category: insight
 Route:    /modules/meeting-cost
-Status:   Foundation
+Status:   Alpha
+AI:       tiny-meeting-cost.calculate
 ```
 
-## Target stack
+## Stack
+
+TypeScript · React · Vite · Tailwind CSS · Lucide Icons · Vitest
+
+## Quality
+
+Every push runs:
 
 ```text
-TypeScript + React + Vite
-TinyManager Module Contract
-Lucide Icons
-Local-first persistence
+Install → Typecheck → Tests → Standalone Build → Module Build
 ```
+
+The current Alpha passes this pipeline.
 
 ## Product principles
 
-1. A calculation should take seconds, not setup work.
-2. No account should be required for a simple local calculation.
-3. The output should help a manager act, not merely show a large number.
-4. Standalone and integrated modes must share one domain engine.
+- minimal input
+- live result, no extra Calculate button
+- Persian RTL / English LTR
+- no mandatory login or backend
+- one domain engine for AI, standalone and Core
+- advanced detail only when needed
 
 ## Roadmap
 
-- [x] Define module manifest
-- [x] Define product scope
-- [ ] Calculation engine
-- [ ] Standalone UI
-- [ ] TinyManager integration
+- [x] Calculation engine
+- [x] Standalone UI
+- [x] TinyManager package build
+- [x] TypeScript declarations
+- [x] Tiny AI action contract
+- [x] Tests + CI
 - [ ] Live meeting timer
-- [ ] Export
-- [ ] Tests + CI
+- [ ] Participant-level cost breakdown
+- [ ] Shareable summary / export
 
 ## License
 
