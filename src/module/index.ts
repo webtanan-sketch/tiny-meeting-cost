@@ -1,3 +1,4 @@
+import '../styles.css';
 import type { MeetingCostInput, TinyLocale } from '../domain/types';
 import { MeetingCostWorkspace } from '../components/MeetingCostWorkspace';
 import { calculateMeetingCost } from '../domain/calculator';
